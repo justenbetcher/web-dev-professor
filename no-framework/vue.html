@@ -125,6 +125,8 @@
                                 <a>
                                   <span class="icon is-small"><i :class="tab.icon"></i></span>
                                   <span>{{ tab.name }}</span>
+                                  <span class="tag is-danger icon" v-show="tab.name == 'Current'">{{ items.filter(item => !item.completed).length }}</span>
+                                  <span class="tag is-success icon" v-show="tab.name == 'Completed'">{{ items.filter(item => item.completed).length }}</span>
                                 </a>
                               </li>
 
@@ -138,8 +140,8 @@
                             </span>
                           </p>
                         </div>
-                        <a v-for="item in items" class="panel-block">
-                            <input type="checkbox" :checked="item.completed" />
+                        <a v-for="item in items" class="panel-block" v-show="shouldShow(item)">
+                            <input type="checkbox" v-model="item.completed" />
                             {{ item.name}}
                         </a>
                       </article>
@@ -319,6 +321,14 @@
 
                         ]
                     }
+                },
+                methods: {
+                    shouldShow(item) {
+                        if (this.currentTab === 'All') return true
+                        if (this.currentTab === 'Completed' && item.completed) return true
+                        if (this.currentTab === 'Current' && !item.completed) return true
+                        return false
+                    },
                 }
             }).mount('body')
         </script>
