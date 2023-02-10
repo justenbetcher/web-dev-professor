@@ -132,19 +132,22 @@
 
                             </ul>
                           </div>
+
                         <div class="panel-block">
                           <p class="control has-icons-left">
-                            <input class="input is-primary" type="text" placeholder="New Task">
+                            <input class="input is-primary" type="text" placeholder="New Task" v-model="newTask" @keypress.enter="addTask">
                             <span class="icon is-left">
                               <i class="fas fa-calendar-plus" aria-hidden="true"></i>
                             </span>
                           </p>
                         </div>
+                        
                         <a v-for="item in items" class="panel-block" v-show="shouldShow(item)">
                             <input type="checkbox" v-model="item.completed" />
                             {{ item.name}}
                         </a>
-                      </article>
+                      
+                    </article>
 
                       <article class="message is-danger">
                         <div class="message-header">
@@ -319,7 +322,8 @@
                             { name: 'Learn Svelte', completed: false },
                             { name: 'Learn Ember', completed: false },
 
-                        ]
+                        ],
+                        newTask: '',
                     }
                 },
                 methods: {
@@ -328,6 +332,10 @@
                         if (this.currentTab === 'Completed' && item.completed) return true
                         if (this.currentTab === 'Current' && !item.completed) return true
                         return false
+                    },
+                    addTask() {
+                        this.items.push({ name: this.newTask, completed: false })
+                        this.newTask = ''
                     },
                 }
             }).mount('body')
