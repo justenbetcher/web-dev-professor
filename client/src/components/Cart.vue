@@ -1,28 +1,9 @@
 <script setup lang="ts">
-    import { useCart } from '@/model/cart';
-import { getProducts } from '@/model/products';
+    import { useCart, total } from '@/model/cart';
 
     const cart = useCart();
-    const products = getProducts();
 
-    cart.value.push({
-        product: products[3],
-        productId: 3,
-        quantity: 1,
-
-    })
-    cart.value.push({
-        product: products[13],
-        productId: 13,
-        quantity: 4,
-
-    })
-    cart.value.push({
-        product: products[23],
-        productId: 23,
-        quantity: 8,
-
-    })
+    
 </script>
 
 <template>
@@ -30,7 +11,7 @@ import { getProducts } from '@/model/products';
         <h1 class="title">
             Cart
             <small>
-                $613
+                ${{ total }}
                 ({{ cart.length }} items)
             </small>
         </h1>
